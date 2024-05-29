@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Include the host app project.
+include ':app'                                                // 默认已有的配置
+setBinding(new Binding([gradle: this]))                                // 新增
+evaluate(new File(                                                     // 新增
+        settingsDir.parentFile,                                              // 新增
+        "${rootProject.name}/flutter_module/.android/include_flutter.groovy"  // 新增
+))                                                                     // 新增
+include ':flutter_module'
+project(':flutter_module').projectDir = new File('../flutter_module')
+
+rootProject.name = "My Application"
+include ':app'
